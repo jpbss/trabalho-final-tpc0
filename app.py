@@ -18,7 +18,6 @@ app.register_blueprint(bpDespesa)
 def home():
     return render_template('home.html')
 
-# Bloco principal para executar a aplicação
 if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+    app.run(debug=True)
 

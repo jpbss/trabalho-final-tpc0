@@ -1,20 +1,20 @@
 {% extends 'base.html' %}
 
-{% block title %}Lista de Despesas{% endblock %}
+{% block title %}Lista de Despesas do Veículo {{ idveiculo }}{% endblock %}
 
 {% block content %}
 <div class="content-box">
     <div class="list-header">
-        <h2>Despesas cadastradas</h2>
-        <a href="{{ url_for('bpDespesa.novo') }}" class="button new-button">Nova Despesa</a>
+        <h2>Despesas do Veículo: {{ idveiculo }}</h2>
+        <a href="{{ url_for('bpDespesa.novo', idveiculo=idveiculo) }}" class="button new-button">Nova Despesa</a>
     </div>
-    <p><strong>Total despesas: </strong> {{ totalDespesas }} R$</p>
+    <p><strong>Total despesas: </strong> R$ {{ "%.2f"|format(totalDespesas) }}</p>
     <table>
         <thead>
             <tr>
                 <th>Descrição</th>
                 <th>Data</th>
-                <th>Valor</th>
+                <th>Valor (R$)</th>
                 <th>Prestador</th>
                 <th>Ações</th>
             </tr>
@@ -24,21 +24,24 @@
                 <tr>
                     <td>{{ despesa.descricao }}</td>
                     <td>{{ despesa.data_servico }}</td>
-                    <td>{{ despesa.valor }}</td>
-                    <td>{{ despesa.prestador.nome_empresa }}</td>
+                    <td>{{ "%.2f"|format(despesa.valor) }}</td>
+                    <td>{{ despesa.prestador.nome_empresa if despesa.prestador else 'N/A' }}</td>
                     <td class="actions">
-                        <a href="{{ url_for('bpDespesa.editar', id=despesa.iddespesa) }}" class="button edit-button">Editar</a>
-                        <form action="{{ url_for('bpDespesa.deletar', id=despesa.iddespesa) }}" method="post" onsubmit="return confirm('Tem certeza que deseja excluir este prestador?');">
+                        <a href="{{ url_for('bpDespesa.editar', idveiculo=idveiculo, iddespesa=despesa.iddespesa) }}" class="button edit-button">Editar</a>
+
+                        <form action="{{ url_for('bpDespesa.deletar', idveiculo=idveiculo, iddespesa=despesa.iddespesa) }}" method="post" onsubmit="return confirm('Tem certeza que deseja excluir esta despesa?');">
                             <button type="submit" class="button delete-button">Excluir</button>
                         </form>
                     </td>
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="3">Nenhuma despesa encontrada.</td>
+                    <td colspan="5">Nenhuma despesa encontrada.</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+    <br>
+    <a href="{{ url_for('bpVeiculo.lista') }}" class="button cancel-button">Voltar para Veículos</a>
 </div>
 {% endblock %}
