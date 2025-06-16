@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Compras{% endblock %}
+
+{% block content %}
+<div class="content-box">
+    <div class="list-header">
+        <h2>Compras Realizadas</h2>
+        <a href="{{ url_for('bpCompra.novo') }}" class="button new-button">Nova Compra</a>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Veículo</th>
+                <th>Vendedor (Cliente)</th>
+                <th>Valor Pago (R$)</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for compra in compras %}
+            <tr>
+                <td>{{ compra.data }}</td>
+                <td>{{ compra.veiculo.fabricante }} {{ compra.veiculo.modelo_veiculo }} ({{ compra.veiculo.idplaca }})</td>
+                <td>{{ compra.cliente.nome }}</td>
+                <td>{{ "%.2f"|format(compra.valor_pago) }}</td>
+                <td class="actions">
+                    <a href="{{ url_for('bpCompra.editar', id=compra.idcompra) }}" class="button edit-button">Editar</a>
+                    <form action="{{ url_for('bpCompra.deletar', id=compra.idcompra) }}" method="post" onsubmit="return confirm('Tem certeza que deseja excluir esta compra?');">
+                        <button type="submit" class="button delete-button">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">Nenhuma compra encontrada.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

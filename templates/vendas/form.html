@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ 'Editar' if is_edit else 'Nova' }} Venda{% endblock %}
+
+{% block content %}
+<div class="content-box form-container">
+    <h2>{{ 'Editar' if is_edit else 'Registrar Nova' }} Venda</h2>
+    <form action="{{ url_for('bpVenda.salvar') }}" method="post">
+        <input type="hidden" name="is_edit" value="{{ is_edit }}">
+        <input type="hidden" name="idvenda" value="{{ venda.idvenda or '' }}">
+
+        <div class="form-group">
+            <label for="idveiculo">Veículo Vendido</label>
+            <select id="idplaca" name="idplaca" required>
+                <option value="">Selecione um veículo...</option>
+                {% for veiculo in veiculos %}
+                    <option value="{{ veiculo.idplaca }}" {% if venda.veiculo and venda.veiculo.idplaca == veiculo.idplaca %}selected{% endif %}>
+                        {{ veiculo.fabricante }} {{ veiculo.modelo_veiculo }} - {{ veiculo.idplaca }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="idcliente">Comprador (Cliente)</label>
+            <select id="idcliente" name="idcliente" required>
+                <option value="">Selecione o comprador...</option>
+                {% for cliente in clientes %}
+                    <option value="{{ cliente.idcliente }}" {% if venda.cliente and venda.cliente.idcliente == cliente.idcliente %}selected{% endif %}>
+                        {{ cliente.nome }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="valor_vendido">Valor Vendido (R$)</label>
+            <input type="number" step="0.01" id="valor_vendido" name="valor_vendido" value="{{ venda.valor_vendido or '' }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="data">Data da Venda</label>
+            <input type="date" id="data" name="data" value="{{ venda.data or '' }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="forma_pagamento">Forma de Pagamento</label>
+            <input type="text" id="forma_pagamento" name="forma_pagamento" value="{{ venda.forma_pagamento or '' }}" required>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="button save-button">Salvar</button>
+            <a href="{{ url_for('bpVenda.lista') }}" class="button cancel-button">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

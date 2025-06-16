@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Vendas{% endblock %}
+
+{% block content %}
+<div class="content-box">
+    <div class="list-header">
+        <h2>Vendas Realizadas</h2>
+        <a href="{{ url_for('bpVenda.novo') }}" class="button new-button">Nova Venda</a>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Veículo</th>
+                <th>Comprador (Cliente)</th>
+                <th>Valor Vendido (R$)</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for venda in vendas %}
+            <tr>
+                <td>{{ venda.data }}</td>
+                <td>{{ venda.veiculo.fabricante }} {{ venda.veiculo.modelo_veiculo }} ({{ venda.veiculo.idplaca }})</td>
+                <td>{{ venda.cliente.nome }}</td>
+                <td>{{ "%.2f"|format(venda.valor_vendido) }}</td>
+                <td class="actions">
+                    <a href="{{ url_for('bpVenda.editar', id=venda.idvenda) }}" class="button edit-button">Editar</a>
+                    <form action="{{ url_for('bpVenda.deletar', id=venda.idvenda) }}" method="post" onsubmit="return confirm('Tem certeza que deseja excluir esta venda?');">
+                        <button type="submit" class="button delete-button">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">Nenhuma venda encontrada.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
