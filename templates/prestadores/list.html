@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de prestadors{% endblock %}
+
+{% block content %}
+<div class="content-box">
+    <div class="list-header">
+        <h2>Prestadores Cadastrados</h2>
+        <a href="{{ url_for('bpPrestador.novo') }}" class="button new-button">Novo Prestador</a>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Cidade</th>
+                <th>UF</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prestador in prestadores %}
+            <tr>
+                <td>{{ prestador.nome_empresa }}</td>
+                <td>{{ prestador.cidade }}</td>
+                <td>{{ prestador.uf }}</td>
+                <td class="actions">
+                    <a href="{{ url_for('bpPrestador.editar', id=prestador.idprestador) }}" class="button edit-button">Editar</a>
+                    <form action="{{ url_for('bpPrestador.deletar', id=prestador.idprestador) }}" method="post" onsubmit="return confirm('Tem certeza que deseja excluir este prestador?');">
+                        <button type="submit" class="button delete-button">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">Nenhum prestador encontrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

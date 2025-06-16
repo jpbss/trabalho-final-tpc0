@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Página Inicial{% endblock %}
+
+{% block content %}
+    <div class="content-box">
+        <h1>Bem-vindo ao Sistema de Gerenciamento de Serviços de Veiculos</h1>
+        <p>Utilize o menu de navegação acima para utilizar o sistema.</p>
+
+        <div class="home-links">
+            <a href="{{ url_for('bpCliente.lista') }}" class="button">Gerenciar Clientes</a>
+            <a href="{{ url_for('bpPrestador.lista') }}" class="button">Gerenciar Prestadores</a>
+            <a href="{{ url_for('bpVeiculo.lista') }}" class="button">Gerenciar Veículos</a>
+        </div>
+    </div>
+{% endblock %}

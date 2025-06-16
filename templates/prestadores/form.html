@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ 'Editar' if prestador.idprestador else 'Novo' }} prestador{% endblock %}
+
+{% block content %}
+<div class="content-box form-container">
+    <h2>{{ 'Editar' if prestador.idprestador else 'Novo' }} prestador</h2>
+    <form action="{{ url_for('bpPrestador.salvar') }}" method="post">
+        <input type="hidden" name="idprestador" value="{{ prestador.idprestador or '' }}">
+
+        <div class="form-group">
+            <label for="nome">Nome Empresa</label>
+            <input type="text" id="nome" name="nome" value="{{ prestador.nome_empresa or '' }}" required>
+        </div>
+        <div class="form-group">
+            <label for="cidade">Cidade</label>
+            <input type="text" id="cidade" name="cidade" value="{{ prestador.cidade or '' }}">
+        </div>
+        <div class="form-group">
+            <label for="uf">UF</label>
+            <input type="text" id="uf" name="uf" value="{{ prestador.uf or '' }}" maxlength="2">
+        </div>
+        <div class="form-group">
+            <label for="cep">CEP</label>
+            <input type="text" id="cep" name="cep" value="{{ prestador.cep or '' }}">
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="button save-button">Salvar</button>
+            <a href="{{ url_for('bpPrestador.lista') }}" class="button cancel-button">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ 'Editar' if veiculo.idveiculo else 'Novo' }} veiculo{% endblock %}
+
+{% block content %}
+<div class="content-box form-container">
+    <h2>{{ 'Editar' if veiculo.idveiculo else 'Novo' }} veiculo</h2>
+    <form action="{{ url_for('bpVeiculo.salvar') }}" method="post">
+        <input type="hidden" name="is_edit" value="{{ is_edit }}">
+        <div class="form-group">
+            <label for="placa">Placa</label>
+            <input type="text" id="idplaca" name="idplaca" value="{{ veiculo.idplaca or '' }}" maxlength="9" minlength="9" required>
+        </div>
+        <div class="form-group">
+            <label for="ano">Ano</label>
+            <input type="number" id="ano" name="ano" value="{{ veiculo.ano or '' }}" required>
+        </div>
+        <div class="form-group">
+            <label for="modelo">Modelo</label>
+            <input type="number" id="modelo" name="modelo" value="{{ veiculo.modelo or '' }}" required>
+        </div>
+        <div class="form-group">
+            <label for="preco_fipe">Preço Fipe</label>
+            <input type="number" id="preco_fipe" name="preco_fipe" value="{{ veiculo.preco_fipe or '' }}" >
+        </div>
+        <div class="form-group">
+            <label for="preco_venda">Preço Venda</label>
+            <input type="number" id="preco_venda" name="preco_venda" value="{{ veiculo.preco_venda or '' }}">
+        </div>
+        <div class="form-group">
+            <label for="fabricante">Fabricante</label>
+            <input type="text" id="fabricante" name="fabricante" value="{{ veiculo.fabricante or '' }}" required>
+        </div>
+        <div class="form-group">
+            <label for="modelo_veiculo">Modelo Veiculo</label>
+            <input type="text" id="modelo_veiculo" name="modelo_veiculo" value="{{ veiculo.modelo_veiculo or '' }}" required>
+        </div>
+        <div class="form-group">
+            <label for="cor">Cor</label>
+            <input type="text" id="cor" name="cor" value="{{ veiculo.cor or '' }}">
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="button save-button">Salvar</button>
+            <a href="{{ url_for('bpVeiculo.lista') }}" class="button cancel-button">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

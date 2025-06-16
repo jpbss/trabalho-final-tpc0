@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Despesas{% endblock %}
+
+{% block content %}
+<div class="content-box">
+    <div class="list-header">
+        <h2>Despesas cadastradas</h2>
+        <a href="{{ url_for('bpDespesa.novo') }}" class="button new-button">Nova Despesa</a>
+    </div>
+    <p><strong>Total despesas: </strong> {{ totalDespesas }} R$</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Descrição</th>
+                <th>Data</th>
+                <th>Valor</th>
+                <th>Prestador</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for despesa in despesas %}
+                <tr>
+                    <td>{{ despesa.descricao }}</td>
+                    <td>{{ despesa.data_servico }}</td>
+                    <td>{{ despesa.valor }}</td>
+                    <td>{{ despesa.prestador.nome_empresa }}</td>
+                    <td class="actions">
+                        <a href="{{ url_for('bpDespesa.editar', id=despesa.iddespesa) }}" class="button edit-button">Editar</a>
+                        <form action="{{ url_for('bpDespesa.deletar', id=despesa.iddespesa) }}" method="post" onsubmit="return confirm('Tem certeza que deseja excluir este prestador?');">
+                            <button type="submit" class="button delete-button">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">Nenhuma despesa encontrada.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

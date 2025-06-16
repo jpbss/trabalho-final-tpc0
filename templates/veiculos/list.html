@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Veículos{% endblock %}
+
+{% block content %}
+<div class="content-box">
+    <div class="list-header">
+        <h2>Veículos Cadastrados</h2>
+        <a href="{{ url_for('bpVeiculo.novo') }}" class="button new-button">Novo Veículo</a>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Ano/Modelo</th>
+                <th>Preço Fipe</th>
+                <th>Preço Venda</th>
+                <th>Fabricante</th>
+                <th>Modelo</th>
+                <th>Cor</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for veiculo in veiculos %}
+            <tr>
+                <td>{{ veiculo.ano }} / {{ veiculo.modelo }}</td>
+                <td>{{ veiculo.preco_fipe }} R$</td>
+                <td>{{ veiculo.preco_venda }} R$</td>
+                <td>{{ veiculo.fabricante }}</td>
+                <td>{{ veiculo.modelo_veiculo }}</td>
+                <td>{{ veiculo.cor }}</td>
+                <td class="actions">
+                    <a href="{{ url_for('bpVeiculo.editar', id=veiculo.idplaca) }}" class="button edit-button">Editar</a>
+                    <a href="{{ url_for('bpDespesa.lista', idveiculo=veiculo.idplaca) }}" class="button secundary-button">Despesas</a>
+                    <form action="{{ url_for('bpVeiculo.deletar', id=veiculo.idplaca) }}" method="post" onsubmit="return confirm('Tem certeza que deseja excluir este veiculo?');">
+                        <button type="submit" class="button delete-button">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7">Nenhum veículo encontrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

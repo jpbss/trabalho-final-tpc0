@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sistema de Gestão{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('home') }}">Início</a>
+        <a href="{{ url_for('bpCliente.lista') }}">Gerenciar Clientes</a>
+        <a href="{{ url_for('bpPrestador.lista') }}" class="button">Gerenciar Prestadores</a>
+        <a href="{{ url_for('bpVeiculo.lista') }}" class="button">Gerenciar Veículos</a>
+        <a>Compras</a>
+        <a>Vendas</a>
+    </nav>
+    <main>
+        <!-- Bloco para exibir mensagens flash(mensagens de notificação de ação) -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        <p>2025 - Sistema de Gerenciamento de Veículos</p>
+    </footer>
+</body>
+</html>
