@@ -1,3 +1,5 @@
+from select import select
+
 import mysql.connector
 class Banco:
 

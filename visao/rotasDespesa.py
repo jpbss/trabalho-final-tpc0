@@ -18,20 +18,21 @@ veiculoDAO = ControleVeiculo()
 prestadorDAO = ControlePrestador()
 
 
+# Rota para LISTAR as despesas de um veículo específico
 @bpDespesa.route('/<string:idveiculo>')
 def lista(idveiculo):
     v = Veiculo()
     v.idplaca = idveiculo
     v = veiculoDAO.pesquisar_por_placa(v)
     despesas = despesaDAO.listar_despesas_veiculo(v)
-    # Passando o idveiculo para ser usado nos links do template
     return render_template("despesas/list.html", despesas=despesas, totalDespesas=v.total_despesa, idveiculo=idveiculo)
 
 
+# Rota para o formulário de uma NOVA despesa
 @bpDespesa.route('/new/<string:idveiculo>')
 def novo(idveiculo):
+    # Apenas busca os prestadores e os envia. Simples assim.
     prestadores = prestadorDAO.listar_todos_prestadores(Prestador())
-    # Passamos um objeto Despesa vazio e o idveiculo
     return render_template('despesas/form.html', despesa=Despesa(), prestadores=prestadores, idveiculo=idveiculo)
 
 
@@ -45,27 +46,24 @@ def editar(idveiculo, iddespesa):
 
     return render_template('despesas/form.html', despesa=despesa_encontrada, prestadores=prestadores,
                            idveiculo=idveiculo)
-
-
-# Rota para SALVAR (tanto novas despesas quanto edições)
 @bpDespesa.route('/save/<string:idveiculo>', methods=['POST'])
 def salvar(idveiculo):
     d = Despesa()
 
-    # Pega os dados do formulário
     d.iddespesa = request.form.get('iddespesa')
     d.veiculo.idplaca = idveiculo
     d.valor = float(request.form.get('valor'))
     d.data_servico = request.form.get('data_servico')
     d.descricao = request.form.get('descricao')
-
-    # CORREÇÃO CRÍTICA: Pega o ID do prestador selecionado no formulário
     d.prestador.idprestador = int(request.form.get('idprestador'))
 
-    # Se 'iddespesa' tiver um valor, é uma alteração. Senão, é uma inclusão.
+    # Se 'iddespesa' for uma string vazia, converte para None
+    if not d.iddespesa:
+        d.iddespesa = None
+
     if d.iddespesa:
-        # A API de alteração não estava implementada, agora está
-        despesaDAO.alterar(d)  # Supondo que seu controle genérico tenha o método alterar
+        # Chama o método correto que já existia no seu controle
+        despesaDAO.alterar_despesa(d)
     else:
         despesaDAO.incluir_despesa(d)
 
@@ -77,8 +75,10 @@ def salvar(idveiculo):
 def deletar(idveiculo, iddespesa):
     d = Despesa()
     d.iddespesa = iddespesa
+    # O método deletar_despesa precisa do id do veículo para recalcular o total
+    d.veiculo.idplaca = idveiculo
 
-    # O método de deleção deve estar no seu controle de despesas
-    despesaDAO.delete(d)  # Supondo que seu controle genérico tenha o método delete
+    # Chama o método correto que já existia no seu controle
+    despesaDAO.deletar_despesa(d)
 
     return redirect(url_for('bpDespesa.lista', idveiculo=idveiculo))

@@ -15,7 +15,6 @@ class ControleGenerico:
         sql = "insert into {} ".format(objeto.tabelaBanco)+'('
         sql+= '{}'.format(objeto.lista)
         sql+= ') values ({})'.format(objeto.dadosInserir)
-        print(sql)
         try:
            self.ob.execute(sql)
            self.ob.gravar()

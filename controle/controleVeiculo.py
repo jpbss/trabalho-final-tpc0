@@ -11,18 +11,30 @@ class ControleVeiculo(ControleGenerico):
     def deletar_veiculo(self, veiculo: Veiculo):
         self.delete(veiculo)
 
-    def atualizar_total_despesas(self, veiculo: Veiculo, despesaAdicional):
-        veiculo = self.pesquisar_por_placa(veiculo)
-        if veiculo:
-            veiculo.total_despesa = veiculo.total_despesa + despesaAdicional
-            self.alterar_veiculo(veiculo)
-
     def pesquisar_por_placa(self, veiculo: Veiculo):
         registro = self.procuraRegistro(veiculo)
         retorno = Veiculo()
         if registro and len(registro) > 0:
             return self.converte_veiculo(registro[0])
         return retorno
+
+    def recalcular_total_despesas(self, idplaca: str):
+
+        self.ob.abrirConexao()
+        sql_soma = f"SELECT SUM(valor) FROM despesa WHERE idplaca = '{idplaca}'"
+
+        resultado = self.ob.selectQuery(sql_soma)
+
+        novo_total = resultado[0][0] if resultado and resultado[0][0] is not None else 0.0
+
+        veiculo = Veiculo()
+        veiculo.idplaca = idplaca
+
+        veiculo = self.pesquisar_por_placa(veiculo)
+
+        if veiculo and veiculo.idplaca:
+            veiculo.total_despesa = float(novo_total)
+            self.alterar(veiculo)
 
     def listar_todos_veiculos(self, veiculo: Veiculo):
         registros = self.listarTodos(veiculo)

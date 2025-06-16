@@ -16,7 +16,6 @@
         <a>Vendas</a>
     </nav>
     <main>
-        <!-- Bloco para exibir mensagens flash(mensagens de notificação de ação) -->
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 <div class="flash-messages">
@@ -32,5 +31,6 @@
     <footer>
         <p>2025 - Sistema de Gerenciamento de Veículos</p>
     </footer>
+    {% block scripts %}{% endblock %}
 </body>
 </html>

@@ -12,15 +12,20 @@ class ControleDespesa(ControleGenerico):
 
     def incluir_despesa(self, despesa: Despesa):
         self.incluir(despesa)
-        veiculo = Veiculo()
-        veiculo.idplaca = despesa.veiculo.idplaca
-        ControleVeiculo().atualizar_total_despesas(veiculo, despesa.valor)
+        ControleVeiculo().recalcular_total_despesas(despesa.veiculo.idplaca)
 
     def alterar_despesa(self, despesa: Despesa):
         self.alterar(despesa)
+        ControleVeiculo().recalcular_total_despesas(despesa.veiculo.idplaca)
 
     def deletar_despesa(self, despesa: Despesa):
+        despesa_completa = self.pesquisa_codigo(despesa)
+        idplaca_veiculo = despesa_completa.veiculo.idplaca
+
         self.delete(despesa)
+
+        if idplaca_veiculo:
+            ControleVeiculo().recalcular_total_despesas(idplaca_veiculo)
 
     def pesquisa_codigo(self, despesa: Despesa):
         registro = self.procuraRegistro(despesa)
