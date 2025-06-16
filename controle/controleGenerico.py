@@ -48,6 +48,7 @@ class ControleGenerico:
 
     def procuraRegistro(self,objeto):
         self.ob.abrirConexao()
+        print(objeto.dadosPesquisa)
         objeto = self.ob.selectQuery(objeto.dadosPesquisa)
         return objeto
 

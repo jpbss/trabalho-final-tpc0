@@ -41,8 +41,6 @@ class Venda:
     def tabelaBanco(self):
         return self.__tabelaBanco
 
-    # --- Getters e Setters para os atributos da tabela ---
-
     @property
     def idvenda(self):
         return self.__idvenda

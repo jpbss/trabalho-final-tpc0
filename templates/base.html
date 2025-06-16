@@ -10,10 +10,10 @@
     <nav>
         <a href="{{ url_for('home') }}">Início</a>
         <a href="{{ url_for('bpCliente.lista') }}">Gerenciar Clientes</a>
-        <a href="{{ url_for('bpPrestador.lista') }}" class="button">Gerenciar Prestadores</a>
-        <a href="{{ url_for('bpVeiculo.lista') }}" class="button">Gerenciar Veículos</a>
-        <a>Compras</a>
-        <a>Vendas</a>
+        <a href="{{ url_for('bpPrestador.lista') }}">Gerenciar Prestadores</a>
+        <a href="{{ url_for('bpVeiculo.lista') }}">Gerenciar Veículos</a>
+        <a href="{{ url_for('bpCompra.lista') }}">Compras</a>
+        <a href="{{ url_for('bpVenda.lista') }}">Vendas</a>
     </nav>
     <main>
         {% with messages = get_flashed_messages(with_categories=true) %}

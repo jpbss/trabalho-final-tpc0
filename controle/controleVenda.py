@@ -36,16 +36,16 @@ class ControleVenda(ControleGenerico):
         venda.idvenda = entrada[0]
         venda.data = entrada[1]
         venda.valor_vendido = entrada[2]
-        venda.forma_pagamento = entrada[5]
+        venda.forma_pagamento = entrada[3]
 
         cliente_dao = ControleCliente()
         cliente_temp = Cliente()
-        cliente_temp.idcliente = entrada[3]
+        cliente_temp.idcliente = entrada[4]
         venda.cliente = cliente_dao.pesquisa_codigo(cliente_temp)
 
         veiculo_dao = ControleVeiculo()
         veiculo_temp = Veiculo()
-        veiculo_temp.idplaca = entrada[4]
+        veiculo_temp.idplaca = entrada[5]
         venda.veiculo = veiculo_dao.pesquisar_por_placa(veiculo_temp)
 
         return venda

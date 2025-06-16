@@ -33,18 +33,18 @@ class ControleCompra(ControleGenerico):
     def converte_compra(self, entrada):
         compra = Compra()
         compra.idcompra = entrada[0]
-        compra.data = entrada[3]
-        compra.valor_pago = entrada[4]
-        compra.forma_pagamento = entrada[5]
+        compra.data = entrada[1]
+        compra.valor_pago = entrada[2]
+        compra.forma_pagamento = entrada[3]
 
         cliente_dao = ControleCliente()
         cliente_obj = Cliente()
-        cliente_obj.idcliente = entrada[2]
+        cliente_obj.idcliente = entrada[5]
         compra.cliente = cliente_dao.pesquisa_codigo(cliente_obj)
 
         veiculo_dao = ControleVeiculo()
         veiculo_obj = Veiculo()
-        veiculo_obj.idplaca = entrada[1]
+        veiculo_obj.idplaca = entrada[4]
         compra.veiculo = veiculo_dao.pesquisar_por_placa(veiculo_obj)
 
         return compra
