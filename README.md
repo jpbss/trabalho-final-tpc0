@@ -1,6 +1,6 @@
 # Sistema de Gestão de Oficina (Trabalho Final)
 
-Este projeto é uma aplicação web desenvolvida em Python como trabalho final para a matéria eletiva de Tópicos em Programação. A aplicação simula um sistema de gerenciamento para uma oficina ou revenda de veículos, permitindo o controle de clientes, veículos, serviços e transações financeiras.
+Este projeto é uma aplicação web desenvolvida em Python como trabalho final para a matéria eletiva de Tópicos em Programação durante minha graduação. A aplicação simula um sistema de gerenciamento para uma oficina ou revenda de veículos, permitindo o controle de clientes, veículos, serviços e transações financeiras.
 
 ## 1\. Visão Geral
 
