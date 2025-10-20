@@ -1,7 +1,3 @@
-Aqui está uma sugestão de texto para o `README.md` do seu projeto, com base nos ficheiros fornecidos.
-
------
-
 # Sistema de Gestão de Oficina (Trabalho Final)
 
 Este projeto é uma aplicação web desenvolvida em Python como trabalho final para a matéria eletiva de Tópicos em Programação. A aplicação simula um sistema de gerenciamento para uma oficina ou revenda de veículos, permitindo o controle de clientes, veículos, serviços e transações financeiras.
